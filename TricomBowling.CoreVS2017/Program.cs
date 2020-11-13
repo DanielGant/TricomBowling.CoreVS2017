@@ -28,15 +28,20 @@ namespace TricomBowling.CoreVS2017
 
             for (int frame = 0; frame < 10; frame++)
             {
-                if (pinFalls[i] + pinFalls[i + 1] == 10)
+                if (pinFalls[i] == 10)
+                {
+                    score += 10 + pinFalls[i + 1] + pinFalls[i + 2];
+                    i++;
+                }
+                else if (pinFalls[i] + pinFalls[i + 1] == 10)
                 {
                     score += 10 + pinFalls[i + 2];
-                    i++;
+                    i+=2;
                 }
                 else
                 {
-                    score += pinFalls[i] + pinFalls[i+1];
-                    i++;
+                    score += pinFalls[i] + pinFalls[i + 1];
+                    i+=2;
                 }
             }
             return score;
