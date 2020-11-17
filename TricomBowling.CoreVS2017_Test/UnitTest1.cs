@@ -5,45 +5,45 @@ namespace TricomBowling.CoreVS2017_Test
 {
     public class Tests
     {
-        Game game;
+        Game _game;
         
         [SetUp]
         public void Setup()
         {
-            game = new Game();
+            _game = new Game();
         }
 
         void RollMany(int rolls, int pins)
         {
             for (int i = 0; i < rolls; i++)
             {
-                game.Roll(pins);
+                _game.Roll(pins);
             }
 
         }
 
         [Test]
-        public void RollGame()
-        {
+        public void RollGameAllGutterBalls()
+        {            
             RollMany(20, 0);
-            Assert.That(game.Score(), Is.EqualTo(0));
+            Assert.That(_game.TotalScore(), Is.EqualTo(0));
         }
 
         [Test]
         public void RollOnes()
         {
             RollMany(20, 1);
-            Assert.That(game.Score(), Is.EqualTo(20));
+            Assert.That(_game.TotalScore(), Is.EqualTo(20));
         }
 
         [Test]
         public void RollSpareFirstFrame()
         {
-            game.Roll(9);
-            game.Roll(1);
+            _game.Roll(9);
+            _game.Roll(1);
             RollMany(18, 1);
 
-            Assert.That(game.Score(), Is.EqualTo(29));
+            Assert.That(_game.TotalScore(), Is.EqualTo(29));
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace TricomBowling.CoreVS2017_Test
         {
             RollMany(21, 5);
 
-            Assert.That(game.Score(), Is.EqualTo(150));
+            Assert.That(_game.TotalScore(), Is.EqualTo(150));
         }
 
         [Test]
@@ -59,11 +59,11 @@ namespace TricomBowling.CoreVS2017_Test
         {
             for (int i = 0; i < 10; i++)
             {
-                game.Roll(9); game.Roll(1);
+                _game.Roll(9); _game.Roll(1);
             }
-            game.Roll(9);
+            _game.Roll(9);
 
-            Assert.That(game.Score(), Is.EqualTo(190));
+            Assert.That(_game.TotalScore(), Is.EqualTo(190));
         }
 
         [Test]
@@ -71,24 +71,69 @@ namespace TricomBowling.CoreVS2017_Test
         {
             RollMany(12, 10);
 
-            Assert.That(game.Score(), Is.EqualTo(300));
+            Assert.That(_game.TotalScore(), Is.EqualTo(300));
         }
 
         [Test]
-        public void RealGame()
+        public void TaskGameExampleOutput1()
         {
-            game.Roll(10);
-            game.Roll(9); game.Roll(1);
-            game.Roll(5); game.Roll(5);
-            game.Roll(7); game.Roll(2);
-            game.Roll(10);
-            game.Roll(10);
-            game.Roll(10);
-            game.Roll(9); game.Roll(0);
-            game.Roll(8); game.Roll(2);
-            game.Roll(9); game.Roll(1); game.Roll(10);
+        //| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10 |
+        //| -, 3 | 5, -| 9, /| 2, 5 | 3, 2 | 4, 2 | 3, 3 | 4, /| X | X, 2, 5 |
+        //Score: 103
+            _game.Roll(0); _game.Roll(3);
+            _game.Roll(5); _game.Roll(0);
+            _game.Roll(9); _game.Roll(1);
+            _game.Roll(2); _game.Roll(5);
+            _game.Roll(3); _game.Roll(2);
+            _game.Roll(4); _game.Roll(2);
+            _game.Roll(3); _game.Roll(3);
+            _game.Roll(4); _game.Roll(6);
+            _game.Roll(10); 
+            _game.Roll(10); _game.Roll(2); _game.Roll(5);
 
-            Assert.That(game.Score(), Is.EqualTo(187));
+
+            Assert.That(_game.TotalScore(), Is.EqualTo(103));
         }
+
+
+        [Test]
+        public void TaskGameExampleOutput2()
+        {
+        //| f1 | f2 | f3 | f4 | f5 | f6 | f7 | f8 | f9 | f10 |
+        //| 7, 1 | 5, /| 2, 7 | 4, /| -, 5 | 8, /| 8, 1 | 4, 3 | 2, 4 | 5, 2 |
+        //  Score: 91            
+
+            _game.Roll(7); _game.Roll(1);
+            _game.Roll(5); _game.Roll(5);
+            _game.Roll(2); _game.Roll(7);
+            _game.Roll(4); _game.Roll(6);
+            _game.Roll(0); _game.Roll(5);
+            _game.Roll(8); _game.Roll(2);
+            _game.Roll(8); _game.Roll(1);
+            _game.Roll(4); _game.Roll(3);
+            _game.Roll(2); _game.Roll(4);
+            _game.Roll(5); _game.Roll(2);
+
+            Assert.That(_game.TotalScore(), Is.EqualTo(91));
+        }
+
+        [Test]
+        public void GameExampleOutput3()
+        {
+            _game.Roll(10);
+            _game.Roll(9); _game.Roll(1);
+            _game.Roll(5); _game.Roll(5);
+            _game.Roll(7); _game.Roll(2);
+            _game.Roll(10);
+            _game.Roll(10);
+            _game.Roll(10);
+            _game.Roll(9); _game.Roll(0);
+            _game.Roll(8); _game.Roll(2);
+            _game.Roll(9); _game.Roll(1); _game.Roll(10);
+
+            Assert.That(_game.TotalScore(), Is.EqualTo(187));
+        }
+
+
     }
 }
